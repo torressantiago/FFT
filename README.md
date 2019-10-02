@@ -1,2 +1,2 @@
 # FFT
-This project aims to implement different FFT algorithms using python
+This project aims to implement different FFT algorithms using c.
