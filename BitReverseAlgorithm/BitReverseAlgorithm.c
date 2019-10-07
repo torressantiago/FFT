@@ -22,8 +22,7 @@ int Bit_Reverse(DATA_TYPE *in, DATA_TYPE *out){
     return 1;
 }
 
-int main()
-{
+int main(){
     DATA_TYPE in_vect[VECT_SIZE], out_vect[VECT_SIZE], i;
 
     for(i = 0; i<VECT_SIZE; i++){
