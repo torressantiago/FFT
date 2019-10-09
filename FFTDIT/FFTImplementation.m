@@ -3,11 +3,11 @@
 % Parámetros de la señal
 Fs = 44100;           % Frecuencia de muestreo                    
 T = 1/Fs;             % Tiempo de muestreo     
-L = 1024;             % Longitud de la señal
+L = 4096;             % Longitud de la señal
 t = (0:L-1)*T;        % Vector de tiempo
 
 % Definición de la señal
-S = sin(2*pi*100*t);
+S = sin(2*pi*1000*t);
 
 %% Implementación de la decimación en tiempo de la FFT
 % Implementación de la FFT
@@ -30,6 +30,7 @@ plot(1000*t,S)
 title('Source signal')
 xlabel('t (milliseconds)')
 ylabel('S(t)')
+xlim([0 10])
 grid on
 subplot(3,1,2)
 plot(f,P1)
@@ -38,7 +39,7 @@ xlabel('f (Hz)')
 ylabel('|P1(f)|')
 grid on
 hold on
-xlim([0 2500])
+xlim([0 2000])
 subplot(3,1,3)
 plot(f,P1a)
 title('Single-Sided Amplitude Spectrum of X(t) | MATLAB')
@@ -48,7 +49,7 @@ P2 = abs(Y/L);
 P1 = P2(1:L/2+1);
 P1(2:end-1) = 2*P1(2:end-1);
 grid on
-xlim([0 2500])
+xlim([0 2000])
 
 function y = FFTDIT(x)
     N = length(x); % Se calcula el tamaño del arreglo
