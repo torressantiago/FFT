@@ -1,43 +1,27 @@
-#include "Num_Complejos.h"
+#ifndef NUM_COMPLEX
+#define NUM_COMPLEX
 
-COMPLEX ConversionCart2Pol	(COMPLEX num){
-	COMPLEX res;
-	res.m = sqrt(pow(num.x,2)+pow(num.y,2));
-	res.a = atan((num.y)/(num.x));
-	return res;
-}
+#include <math.h>
 
-COMPLEX ConversionPol2Cart	(COMPLEX num){
-	COMPLEX res;
-	res.x = cos(num.a)*num.m;
-	res.y = sin(num.a)*num.m;
-	return res;
-}
+#ifndef NVAL
+#define NVAL 8
+#endif
 
-COMPLEX ComplexSuma			(COMPLEX num1, COMPLEX num2){
-	COMPLEX res;
-	res.x = num1.x + num2.x;
-	res.y = num1.y + num2.y;
-return res;
-}
+typedef struct {
+	double x,y; // Coordenadas cartesianas
+	double m,a;	// Coordenas polares
+}COMPLEX;
 
-COMPLEX ComplexResta		(COMPLEX num1, COMPLEX num2){
-	COMPLEX res;
-	res.x = num1.x - num2.x;
-	res.y = num1.y - num2.y;
-return res;
-}
+COMPLEX ConversionCart2Pol	(COMPLEX);
 
-COMPLEX ComplexMult			(COMPLEX num1, COMPLEX num2){
-	COMPLEX res;
-	res.m = num1.m * num2.m;
-	res.a = num1.a + num2.a;
-return res;
-}
+COMPLEX ConversionPol2Cart	(COMPLEX);
 
-COMPLEX WnCalculator		(double rval){
-	COMPLEX res;
-	res.m = 1;
-	res.a = -2*M_PI*rval/NVAL;
-	return (ConversionPol2Cart(res));
-}
+COMPLEX ComplexSuma			(COMPLEX, COMPLEX);
+
+COMPLEX ComplexResta		(COMPLEX, COMPLEX);
+
+COMPLEX ComplexMult			(COMPLEX, COMPLEX);
+
+COMPLEX WnCalculator		(double);
+
+#endif
