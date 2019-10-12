@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1570839847 source:c:\users\santo\desktop\fft-master\fftditenc\fftdit\num_complejos.c
+	"Num_Complejos.h"
+
+1570836399 c:\users\santo\desktop\fft-master\fftditenc\fftdit\num_complejos.h
+	<math.h>
+
+1570840629 source:c:\users\santo\desktop\fft-master\fftditenc\fftdit\main.c
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	<math.h>
+	"Num_Complejos.h"
+

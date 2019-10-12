@@ -1,18 +1,18 @@
 %% FFT implementation
-%% Generación de la señal
-% Parámetros de la señal
+%% Generacion de la senal
+% Parametros de la senal
 Fs = 44100;           % Frecuencia de muestreo                    
 T = 1/Fs;             % Tiempo de muestreo     
-L = 4096;             % Longitud de la señal
+L = 8;             % Longitud de la senal
 t = (0:L-1)*T;        % Vector de tiempo
 
-% Definición de la señal
-S = sin(2*pi*1000*t);
+% Definicion de la senal
+S = [5 5 5 5 5 5 5 5];
 
-%% Implementación de la decimación en tiempo de la FFT
-% Implementación de la FFT
+%% Implementacion de la decimacion en tiempo de la FFT
+% Implementacion de la FFT
 Y = FFTDIT(S);
-% Implementación de MATLAB
+% Implementacion de MATLAB
 Y1 = fft(S);
 
 P2 = abs(Y/L);
@@ -23,7 +23,7 @@ P1(2:end-1) = P1(2:end-1);
 P1a(2:end-1) = P1a(2:end-1);
 f = Fs*(0:(L/2))/L;
 
-% Se grafica la señal en tiempo y frecuencia
+% Se grafica la senal en tiempo y frecuencia
 figure
 subplot(3,1,1)
 plot(1000*t,S)
@@ -52,23 +52,24 @@ grid on
 xlim([0 2000])
 
 function y = FFTDIT(x)
-    N = length(x); % Se calcula el tamaño del arreglo
+    N = length(x); % Se calcula el tamano del arreglo
     S = log2(N); % Se calcula la cantidad de etapas                                                       
-    Half = 1; % Se pone el valor que indicará sobre la mitad que se está trabajando
-    x = bitrevorder(x); % Se codifica a través de bit-reverse
+    Half = 1; % Se pone el valor que indicara sobre la mitad que se esta trabajando
+    x = bitrevorder(x); % Se codifica a traves de bit-reverse
     for Stage = 1:S % Se recorre por etapa
         for Butter = 0:(2^Stage):(N-1) % Se define la cantidad de mariposas por etapa
-            for n = 0:(Half-1) % Máxima extensión de la posición relativa
-                pos = n+Butter+1; % Se calcula la posición relativa
+            for n = 0:(Half-1) % Maxima extension de la posicion relativa
+                pos = n+Butter+1; % Se calcula la posicion relativa
                 r = (2^(S-Stage))*n; % Text book definition
                 Wn = exp((-1i)*(2*pi)*r/N); % Se calcula el factor complejo
-                a = x(pos)+x(pos+Half).*Wn; % Se calcula Xm[p]
-                b = x(pos)-x(pos+Half).*Wn; % Se calcula Xm[q]
-                x(pos) = a; % Se guarda en la posición relativa
-                x(pos+Half) = b; % Se guarda en la otra mitad respecto a la posición relativa
+                p = x(pos+Half).*Wn;
+                a = x(pos)+p; % Se calcula Xm[p]
+                b = x(pos)-p; % Se calcula Xm[q]
+                x(pos) = a; % Se guarda en la posicion relativa
+                x(pos+Half) = b; % Se guarda en la otra mitad respecto a la posicion relativa
             end
         end
-    Half = 2*Half; % Se calcula la división
+    Half = 2*Half; % Se calcula la division
     end
     y = x; % Se retorna el resultado
 end
