@@ -4,15 +4,19 @@
 #include <math.h>
 #include <complex.h>
 
-#define DATA_TYPE uint16_t
+#define DATA_TYPE int16_t
 #define VECT_SIZE 8
 #define NVAL VECT_SIZE
 #define NUM_BITS 3
 
+typedef struct{
+    complex double f[NVAL];
+}FFTvectorize;
 
+static FFTvectorize ffff;
 
 int Bit_Reverse(DATA_TYPE *in, DATA_TYPE *out);
-uint16_t fftdit(complex *);
+FFTvectorize fftdit(FFTvectorize);
 
 DATA_TYPE Signal[NVAL] = {1,-1,1,-1,1,-1,1,-1};
 
@@ -27,19 +31,20 @@ int main(){
     for(i = 0; i < NVAL; i++){
         SReverseComplex[i] = (double complex)SReverse[i];
         FFTVector[i] =  SReverseComplex[i];
+        ffff.f[i] = SReverseComplex[i];
     }
     int k = 0;
     for(k = 0; k<VECT_SIZE; k++){
-        printf("SigIn[%d] = %.2f %+.2fi\n",k, creal(SReverseComplex[k]), cimag(SReverseComplex[k]));
+        printf("SigIn[%d] = %.2f %+.2fi\n",k, creal(ffff.f[k]), cimag(ffff.f[k]));
     }
     printf("\n\n\n");
     // FFT
-    fftdit(FFTVector);
+    ffff=fftdit(ffff);
 
     printf("\n\n\n");
     int p = 0;
     for(p = 0; p<VECT_SIZE; p++){
-        printf("FFT[%d] = %.2f %+.2fi\n",p, creal(FFTVector[p]), cimag(FFTVector[p]));
+        printf("FFT[%d] = %.2f %+.2fi\n",p, creal(ffff.f[p]), cimag(ffff.f[p]));
     }
     return 0;
 }
@@ -58,7 +63,7 @@ int Bit_Reverse(DATA_TYPE *in, DATA_TYPE *out){
     return 1;
 }
 
-uint16_t fftdit(complex x[]){
+FFTvectorize fftdit(FFTvectorize x){
     uint16_t Half = 1;
     uint16_t Stage = 1;
     uint16_t Butterfly = 0;
@@ -81,15 +86,21 @@ uint16_t fftdit(complex x[]){
                 printf("\t \t \t r %0.2f \n", r);
                 Wn = cexp(((I)*(2*M_PI)*r/VECT_SIZE));
                 printf("\t \t \t Wn = %f %+fi\n", creal(Wn), cimag(Wn));
-                printf("\t \t \t x[pos+Half] = %f %+fi\n", creal(x[pos+Half]), cimag(x[pos+Half]));
-                printf("\t \t \t x[pos] = %f %+fi\n", creal(x[pos]), cimag(x[pos]));
-                temp = (Wn * x[pos+Half]);
+                printf("\t \t \t ax[pos+Half] = %f %+fi\n", creal(x.f[pos+Half]), cimag(x.f[pos+Half]));
+                printf("\t \t \t ax[pos] = %f %+fi\n", creal(x.f[pos]), cimag(x.f[pos]));
+                printf("\t \t \t tempantes = %f %+fi\n", creal(temp), cimag(temp));
+                printf("\t \t \t pos+half = %d\n", pos+Half);
+                temp = (Wn * x.f[pos+Half]);
+                x.f[pos+Half]     = (x.f[pos] - temp);
+                x.f[pos]          = (x.f[pos] + temp); // OPERACIONES
+
                 printf("\t \t \t temp = %f %+fi\n", creal(temp), cimag(temp));
-                x[pos]          = (x[pos] + temp); // OPERACIONES
-                x[pos+Half]     = (x[pos] - temp);
+                printf("\t \t \t x[pos+Half] = %f %+fi\n", creal(x.f[pos+Half]), cimag(x.f[pos+Half]));
+                printf("\t \t \t x[pos] = %f %+fi\n", creal(x.f[pos]), cimag(x.f[pos]));
+                printf("\t \t \t temp = %f %+fi\n", creal(temp), cimag(temp));
             }
         }
         Half *= 2;
     }
-    return 1;
+    return x;
 }
