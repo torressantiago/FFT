@@ -12,3 +12,10 @@
 	<math.h>
 	"Num_Complejos.h"
 
+1571502567 source:c:\users\santo\documents\github\fft\fftditenc\fftdit\main.c
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	<math.h>
+	<complex.h>
+

@@ -1,0 +1,1 @@
+"./AM335X_device.obj" "./AM335X_ecc.obj" "./aic31.obj" "./cache.obj" "./codecif.obj" "./debug.obj" "./edma.obj" "./edmaV2.obj" "./gpio.obj" "./gpiov2.obj" "./i2c.obj" "./i2cv2.obj" "./interrupt.obj" "./intvecs.obj" "./main.obj" "./mcasp.obj" "./mcasp1.obj" "./psc.obj" "./uart.obj" "./uartv2.obj" "./util.obj" "../C6748.cmd" -llibc.a 

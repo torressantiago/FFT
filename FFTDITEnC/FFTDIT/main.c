@@ -64,7 +64,6 @@ uint16_t fftdit(complex x[]){
     uint16_t Butterfly = 0;
     uint16_t n = 0;
     uint16_t pos;
-
     double r;
 
     complex Wn, temp;
